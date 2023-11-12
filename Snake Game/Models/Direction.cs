@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Snake_Game
+namespace Snake_Game.Models
 {
     public class Direction
     {
-        public readonly Direction Left = new Direction(0,-1);
-        public readonly Direction Right = new Direction(0,1);
-        public readonly Direction Up = new Direction(-1,0);
-        public readonly Direction Down = new Direction(1,0);
+        public readonly Direction Left = new Direction(0, -1);
+        public readonly Direction Right = new Direction(0, 1);
+        public readonly Direction Up = new Direction(-1, 0);
+        public readonly Direction Down = new Direction(1, 0);
 
         public int RowOffset { get; }
         public int ColOffset { get; }
@@ -19,9 +19,9 @@ namespace Snake_Game
             ColOffset = col;
         }
 
-        public Direction Opposite() 
+        public Direction Opposite()
         {
-            return new Direction(-RowOffset,-ColOffset);
+            return new Direction(-RowOffset, -ColOffset);
         }
 
 
