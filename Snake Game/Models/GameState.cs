@@ -22,6 +22,41 @@ namespace Snake_Game.Models
             Cols = cols;
             Grid = new GridValue[Rows,Cols];
             Dir = Direction.Right;
+            AddSnake();
+            AddFood();
+        }
+
+        void AddSnake() 
+        {
+            int r = Rows / 2;
+            for(int c = 1; c <= 3; c++) 
+            {
+                Grid[r, c] = GridValue.Snake;
+                snakePositions.AddFirst(new Position(r, c));
+            }
+        }
+
+        IEnumerable<Position> EmptyPositions() 
+        {
+            for (int r = 0; r < Rows; r++) 
+            {
+                for (int c = 0; c < Cols; c++)
+                {
+                    if (Grid[r, c] == GridValue.Empty)
+                        yield return new Position(r, c);
+                }
+            }
+        }
+
+        void AddFood() 
+        {
+            List<Position> empty = new List<Position>(EmptyPositions());
+            if (empty.Count == 0) 
+            {
+                return;
+            }
+            Position pos = empty[random.Next(empty.Count)];
+            Grid[pos.Row, pos.Col] = GridValue.Food;
         }
 
     }
