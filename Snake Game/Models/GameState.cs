@@ -46,6 +46,28 @@ namespace Snake_Game.Models
             Dir = dir;
         }
 
+        public void Move() 
+        {
+            Position headPos = HeadPosition().Translate(Dir);
+            GridValue hit = WillHit(headPos);
+
+            if (hit == GridValue.Outside || hit == GridValue.Snake) 
+            {
+                GameOver = true;
+            }
+            else if (hit == GridValue.Empty)
+            {
+                RemoveTail();
+                AddHead(headPos);
+            }
+            else if (hit == GridValue.Food)
+            {
+                AddHead(headPos);
+                Score++;
+                AddFood();
+            }
+        }
+
         void AddSnake() 
         {
             int r = Rows / 2;
