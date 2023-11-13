@@ -91,5 +91,25 @@ namespace Snake_Game.Models
             Grid[tail.Row, tail.Col] = GridValue.Empty;
             snakePositions.RemoveLast();
         }
+
+        bool OutsideGrid(Position pos) 
+        {
+            return pos.Row < 0 || pos.Row >= Rows || pos.Col < 0 || pos.Col >= Cols;
+        }
+
+        GridValue WillHit(Position headPos) 
+        {
+            if (OutsideGrid(headPos)) 
+            {
+                return GridValue.Outside;
+            }
+            
+            if (headPos== TailPosition()) 
+            {
+                return GridValue.Empty;
+            }
+
+            return Grid[headPos.Row, headPos.Col];
+        }
     }
 }
