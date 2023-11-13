@@ -36,6 +36,11 @@ namespace Snake_Game.Models
             return snakePositions.Last.Value;
         }
 
+        public IEnumerable<Position> SnakePositions() 
+        {
+            return snakePositions;
+        }
+
         void AddSnake() 
         {
             int r = Rows / 2;
@@ -69,6 +74,10 @@ namespace Snake_Game.Models
             Grid[pos.Row, pos.Col] = GridValue.Food;
         }
 
-
+        void AddHead(Position pos) 
+        {
+            snakePositions.AddFirst(pos);
+            Grid[pos.Row, pos.Col] = GridValue.Snake;
+        }
     }
 }
