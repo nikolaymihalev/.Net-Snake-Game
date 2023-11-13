@@ -41,6 +41,11 @@ namespace Snake_Game.Models
             return snakePositions;
         }
 
+        public void ChangeDirection(Direction dir) 
+        {
+            Dir = dir;
+        }
+
         void AddSnake() 
         {
             int r = Rows / 2;
@@ -78,6 +83,13 @@ namespace Snake_Game.Models
         {
             snakePositions.AddFirst(pos);
             Grid[pos.Row, pos.Col] = GridValue.Snake;
+        }
+
+        void RemoveTail() 
+        {
+            Position tail = snakePositions.Last.Value;
+            Grid[tail.Row, tail.Col] = GridValue.Empty;
+            snakePositions.RemoveLast();
         }
     }
 }
