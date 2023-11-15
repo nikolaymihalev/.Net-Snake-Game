@@ -1,4 +1,5 @@
-﻿using Snake_Game.Models;
+﻿using Snake_Game.Enums;
+using Snake_Game.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,24 @@ namespace Snake_Game
     /// </summary>
     public partial class MainWindow : Window
     {
+        readonly Dictionary<GridValue, ImageSource> gridValToImage = new()
+        {
+            { GridValue.Empty, Images.Empty },
+            { GridValue.Snake, Images.Body },
+            { GridValue.Food, Images.Food }
+        };
+
+
         readonly int rows = 15;
         readonly int cols = 15;
         readonly Image[,] gridImages;
+        GameState gameState;
 
         public MainWindow()
         {
             InitializeComponent();
             gridImages = SetupGrid();
+            gameState = new GameState(rows, cols);
         }
 
         Image[,] SetupGrid() 
@@ -50,6 +61,23 @@ namespace Snake_Game
                 }
             }
             return images;
+        }
+
+        void Draw() 
+        {
+            DrawGrid();
+        }
+
+        void DrawGrid() 
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    GridValue gridValue = gameState.Grid[i, j];
+                    gridImages[i, j].Source = gridValToImage[gridValue];
+                }
+            }
         }
     }
 }
