@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake_Game.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,35 @@ namespace Snake_Game
     /// </summary>
     public partial class MainWindow : Window
     {
+        readonly int rows = 15;
+        readonly int cols = 15;
+        readonly Image[,] gridImages;
+
         public MainWindow()
         {
             InitializeComponent();
+            gridImages = SetupGrid();
+        }
+
+        Image[,] SetupGrid() 
+        {
+            Image[,] images=new Image[rows, cols];
+            GameGrid.Rows = rows;
+            GameGrid.Columns = cols;
+
+            for (int i = 0; i < rows; i++) 
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Image image = new Image
+                    {
+                        Source = Images.Empty
+                    };
+                    images[i, j] = image;
+                    GameGrid.Children.Add(image);
+                }
+            }
+            return images;
         }
     }
 }
