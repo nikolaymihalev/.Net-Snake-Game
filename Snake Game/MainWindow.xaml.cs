@@ -42,6 +42,35 @@ namespace Snake_Game
             gameState = new GameState(rows, cols);
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e) 
+        {
+            Draw();
+        }
+        
+        private void Window_KeyDown(object sender, KeyEventArgs e) 
+        {
+            if (gameState.GameOver) 
+            {
+                return;
+            }
+            switch (e.Key) 
+            {
+                case Key.A:
+                    gameState.ChangeDirection(Direction.Left);
+                    break;
+                case Key.S:
+                    gameState.ChangeDirection(Direction.Down);
+                    break;
+                case Key.D:
+                    gameState.ChangeDirection(Direction.Right);
+                    break;
+                case Key.W:
+                    gameState.ChangeDirection(Direction.Up);
+                    break;
+
+            }
+        }
+
         Image[,] SetupGrid() 
         {
             Image[,] images=new Image[rows, cols];
@@ -79,5 +108,7 @@ namespace Snake_Game
                 }
             }
         }
+
+       
     }
 }
