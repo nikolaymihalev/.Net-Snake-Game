@@ -7,6 +7,7 @@ namespace Snake_Game.Models
     public class GameState
     {
         readonly LinkedList<Position> snakePositions = new LinkedList<Position>();
+        readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
         readonly Random random = new Random();
 
         public int Rows { get; }
@@ -43,11 +44,20 @@ namespace Snake_Game.Models
 
         public void ChangeDirection(Direction dir) 
         {
-            Dir = dir;
+            if (CanChangeDirection(dir)) 
+            {
+                dirChanges.AddLast(dir);
+            }
         }
 
         public void Move() 
         {
+            if (dirChanges.Count > 0) 
+            {
+                Dir = dirChanges.First.Value;
+                dirChanges.RemoveFirst();
+            }
+
             Position headPos = HeadPosition().Translate(Dir);
             GridValue hit = WillHit(headPos);
 
@@ -132,6 +142,22 @@ namespace Snake_Game.Models
             }
 
             return Grid[headPos.Row, headPos.Col];
+        }
+
+        Direction GetLastDirection() 
+        {
+            if (dirChanges.Count == 0)
+                return Dir;
+            return dirChanges.Last.Value;
+        }
+
+        bool CanChangeDirection(Direction newDir) 
+        {
+            if (dirChanges.Count == 2)
+                return false;
+
+            Direction lastDir = GetLastDirection();
+            return newDir != lastDir && newDir != lastDir.Opposite();
         }
     }
 }
