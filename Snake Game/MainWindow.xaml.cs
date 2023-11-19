@@ -110,7 +110,8 @@ namespace Snake_Game
                 {
                     Image image = new Image
                     {
-                        Source = Images.Empty
+                        Source = Images.Empty,
+                        RenderTransformOrigin = new Point(.5,.5)
                     };
                     images[i, j] = image;
                     GameGrid.Children.Add(image);
@@ -134,6 +135,7 @@ namespace Snake_Game
                 {
                     GridValue gridValue = gameState.Grid[i, j];
                     gridImages[i, j].Source = gridValToImage[gridValue];
+                    gridImages[i, j].RenderTransform = Transform.Identity;
                 }
             }
         }
